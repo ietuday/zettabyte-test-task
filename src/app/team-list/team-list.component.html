@@ -1,0 +1,77 @@
+<p-growl [value]="msgs" sticky="sticky"></p-growl>
+
+<form [formGroup]="userform" (ngSubmit)="onSubmit(userform.value)">
+    <p-panel header="Team Detail">
+        <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid" style="margin: 10px 0px">
+            <div class="ui-grid-row">
+                <div class="ui-grid-col-2">
+                    Team Name *:
+                </div>
+                <div class="ui-grid-col-6">
+                    <input pInputText type="text" formControlName="name" placeholder="Required" />
+                </div>
+                <div class="ui-grid-col-4">
+                    <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!userform.controls['name'].valid&&userform.controls['name'].dirty">
+                        <i class="fa fa-close"></i> Team Name is required
+                    </div>
+                </div>
+            </div>
+            <div class="ui-grid-row">
+                <div class="ui-grid-col-2">
+                    Description *:
+                </div>
+                <div class="ui-grid-col-6">
+                    <input pInputText type="text" formControlName="description" placeholder="Required" />
+                </div>
+                <div class="ui-grid-col-4">
+                    <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!userform.controls['description'].valid&&userform.controls['description'].dirty">
+                        <i class="fa fa-close"></i> Team Description is required
+                    </div>
+                </div>
+            </div>
+
+            <div class="ui-grid-row">
+                <div class="ui-grid-col-2">
+                    TechStack *:
+                </div>
+                <div class="ui-grid-col-6">
+                    <input pInputText type="text" formControlName="techStack" placeholder="Required" />
+                </div>
+                <div class="ui-grid-col-4">
+                    <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!userform.controls['techStack'].valid&&userform.controls['techStack'].dirty">
+                        <i class="fa fa-close"></i> TechStack is required
+                    </div>
+                </div>
+            </div>
+
+            <div class="ui-grid-row">
+                <div class="ui-grid-col-2"></div>
+                <div class="ui-grid-col-6">
+                    <button pButton type="submit" label="Save" [disabled]="!userform.valid"></button>
+                </div>
+                <div class="ui-grid-col-4"></div>
+            </div>
+        </div>
+    </p-panel>
+</form>
+
+<p-dataTable #ex [value]="teams" [rows]="10" [paginator]="true" [pageLinks]="3" [rowsPerPageOptions]="[5,10,20]" [sortField]="sortF" [sortOrder]="sortO" (onSort)="changeSort($event)" resizableColumns="true" [globalFilter]="gb" reorderableColumns="true"
+    [responsive]="true" exportFilename="teams">
+    <p-header>
+        List of Available Teams
+        <div class="ui-helper-clearfix">
+            <button type="button" pButton icon="fa-file-o" iconPos="left" label="All Data" (click)="ex.exportCSV()" style="float:left"></button>
+        </div>
+
+    </p-header>
+    <p-column field="name" header="Name" [sortable]="true" [filter]="true" filterPlaceholder="Search" [editable]="true"></p-column>
+    <p-column field="description" header="Description" [sortable]="true" [filter]="true" filterPlaceholder="Search" [editable]="true"></p-column>
+    <p-column field="techStack" header="TechStack" [sortable]="true" [filter]="true" filterPlaceholder="Search" [editable]="true"></p-column>
+    <p-column field="action" header="Action">
+        <ng-template let-team="rowData" pTemplate="body">
+            <button type="button" pButton (click)="editTeam(team)" icon="fa fa-pencil"></button>
+            <button type="button" pButton (click)="deleteTeam(team)" icon="fa fa-trash"></button>
+            <button type="button" pButton (click)="detailTeam(team)" icon="fa fa-eye "></button>
+        </ng-template>
+    </p-column>
+</p-dataTable>
