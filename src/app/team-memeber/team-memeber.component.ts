@@ -29,7 +29,7 @@ updateTeamMember:boolean;
 
     this.userform = this.fb.group({
       'firstName': new FormControl('', Validators.required),
-      'middleName': new FormControl('', Validators.required),
+      'middleName': new FormControl(''),
       'lastName': new FormControl('', Validators.required),
       'EmailAddress': new FormControl('', Validators.required),
       'teamId': new FormControl(this.teamMemberId)
